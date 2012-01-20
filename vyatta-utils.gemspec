@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Yoshihiro TAKAHARA"]
   s.email       = ["y.takahara@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Vyatta utilities}
+  s.description = %q{include vyatta config to command converter}
 
   s.rubyforge_project = "vyatta-utils"
 
