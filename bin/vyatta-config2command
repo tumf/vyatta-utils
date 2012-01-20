@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+$:.unshift(File.expand_path(File.join(File.dirname(__FILE__),'..','lib')))
+require 'optparse'
+require 'vyatta-utils'
+require 'vyatta-utils/config_parser'
+
+def walk_statements(stmts,prefix="")
+  res = ""
+  stmts.compact.each{|stmt|
+    if stmt.has_key?("group")
+      res += walk_statements(stmt["group"],prefix+" "+stmt["values"].join(" "))
+    else
+      res += "set "+prefix+" "+stmt["values"].join(" ")+"\n"
+    end
+  }
+  res
+end
+def exit_with_show_usage
+  puts "Vyatta config to command converter #{Vyatta::Utils::VERSION}"
+  puts "Usage: #{$0} [infile] [-o outfile]"
+  exit
+end
+
+opt=OptionParser.new
+infile = nil
+outfile = nil
+# opt.on('-i VAL'){|v| infile=v}
+opt.on('-o VAL'){|v| outfile=v}
+opt.on('-v'){ exit_with_show_usage }
+opt.on('-h'){ exit_with_show_usage }
+
+opt.parse!(ARGV)
+
+stmts = nil
+parser = Vyatta::Utils::ConfigParser.new()
+
+inf = ARGF
+infile = ARGV.shift
+inf = open(infile) if infile
+
+stmts = parser.parse(inf.read)
+res = walk_statements(stmts)
+
+if outfile
+  open(outfile,"w"){|f|
+    f.write(res)
+  }
+else
+  puts res
+end
+exit 0

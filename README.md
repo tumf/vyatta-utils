@@ -12,23 +12,32 @@ Vyatta utils
 インストール手順
 ---------------
 
-1.raccのインストール
-  
+### githubから
+
+    $ git clone git://github.com/tumf/vyatta-utils.git
+    $ cd vyatta-utils
     $ bundle install
+    
+### RubyGemsから
 
-config解析用のパーサ生成
-----------------------
-
-`lib/vyatta-utils/parse.y`を修正したときには以下のコマンドでパーサを更新する。
-
-    $ racc parse.y -o vyattaparser.rb
-
+    $ gem install vyatta-utils
+    
 
 config->command 変換
 --------------------
 
 Vyattaのconfigをコマンドライン形式に変換する。
 
-    $ ruby convert.rb -i 変換したいファイル -o 出力先ファイル
+    $ vyatta-config2command 変換したいコンフィグファイル -o 出力先コマンドファイル
 
-出力先ファイルの指定を省略した場合は標準出力に出力する
+入力先ファイルの指定を省略した場合は標準入力から入力する。
+出力先ファイルの指定を省略した場合は標準出力に出力する。
+
+config解析用のパーサ生成
+----------------------
+
+`lib/vyatta-utils/config.y`を修正したときには以下のコマンドでパーサを更新する。
+
+    $ racc lib/vyatta-utils/config.y -o lib/vyatta-utils/config_parser.rb
+
+
