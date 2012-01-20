@@ -1,19 +1,33 @@
 Vyatta utils
 ============
 
+仮想ルータVyattaのユーティリティ
 
-手順
----
+現在ある機能
+----------
+
+ - コンフィグファイルをコマンドライン形式へのコンバート
+
+
+インストール手順
+---------------
 
 1.raccのインストール
   
-    $ gem install racc
+    $ bundle install
 
-2.パーサ生成
+config解析用のパーサ生成
+----------------------
+
+`lib/vyatta-utils/parse.y`を修正したときには以下のコマンドでパーサを更新する。
 
     $ racc parse.y -o vyattaparser.rb
 
-3.変換
+
+config->command 変換
+--------------------
+
+Vyattaのconfigをコマンドライン形式に変換する。
 
     $ ruby convert.rb -i 変換したいファイル -o 出力先ファイル
 
