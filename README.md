@@ -41,3 +41,6 @@ config解析用のパーサ生成
     $ racc lib/vyatta-utils/config.y -o lib/vyatta-utils/config_parser.rb
 
 
+[![endorse](http://api.coderwall.com/tumf/endorsecount.png)](http://coderwall.com/tumf)
+
+
